@@ -33,4 +33,7 @@ return [
         realpath(storage_path('framework/views'))
     ),
 
+    // paginate cars
+    'paginate' => 2,
+
 ];
