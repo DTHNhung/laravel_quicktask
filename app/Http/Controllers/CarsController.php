@@ -104,6 +104,18 @@ class CarsController extends Controller
      */
     public function destroy($id)
     {
-        return redirect()->route('cars.index');
+        $car = Car::find($id);
+
+        if (empty($car)) {
+            return redirect()
+                ->route('cars.index')
+                ->with('message', 'No matching result found!');
+        }
+
+        $car->delete();
+
+        return redirect()
+            ->route('cars.index')
+            ->with('message', 'Delete success data of car!');
     }
 }
