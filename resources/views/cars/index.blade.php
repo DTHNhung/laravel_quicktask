@@ -26,6 +26,21 @@
         <div class="w-5/6 py-10">
             @foreach ($cars as $car)
                 <div class="m-auto">
+                    <div class="float-right">
+                        <form 
+                            action="{{ route('cars.destroy', [ 'car' => $car->id, ] ) }}"
+                            class="pt-3"
+                            method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('delete')
+                            <button 
+                                type="submit"
+                                class="border-b-2 pb-2 border-dotted italic text-red-500">
+                                Delete &rarr;
+                            </button>
+                        </form>
+                    </div>
 
                     <span class="uppercase text-blue-500 font-bold text-xc italic">
                         Founed: {{ $car->founded }}
