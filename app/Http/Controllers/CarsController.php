@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Http\Requests\CreateRequest;
 use Illuminate\Support\Facades\Config;
 
 class CarsController extends Controller
@@ -38,9 +39,17 @@ class CarsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        return redirect()->route('cars.index');
+        $car = Car::create([
+            'name' => $request->input('name'),
+            'founded' => $request->input('founded'),
+            'description' => $request->input('description'),
+        ]);
+
+        return redirect()
+            ->route('cars.index')
+            ->with('message', 'Create success data of car!');
     }
 
     /**
