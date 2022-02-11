@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Car;
+use Illuminate\Support\Facades\Config;
 
 class CarsController extends Controller
 {
@@ -12,8 +14,12 @@ class CarsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('cars.index');
+    {   
+        $cars = Car::paginate(config('view.paginate'));
+
+        return view('cars.index', [
+            'cars' => $cars,
+        ]);
     }
 
     /**
@@ -45,7 +51,17 @@ class CarsController extends Controller
      */
     public function show($id)
     {
-        return view('cars.show');
+        $car = Car::find($id);
+
+        if (empty($car)) {
+            return redirect()
+                ->route('cars.index')
+                ->with('message', 'No matching result found!');
+        }
+
+        return view('cars.show', [
+            'car' => $car,
+        ]);
     }
 
     /**
