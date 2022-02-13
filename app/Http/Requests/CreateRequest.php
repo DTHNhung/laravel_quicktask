@@ -23,10 +23,19 @@ class CreateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'bail|required|alpha|min:2|unique:cars',
-            'founded' => 'bail|required|numeric|min:0|max:' . date('Y'),
-            'description' => 'bail|required',
-        ];
+        if ($this->route()->getName() == 'cars.update') {
+            $rules = [
+                'name' => 'bail|required|alpha|min:2|unique:cars,id,:id',
+                'founded' => 'bail|required|numeric|min:1500|max:' . date('Y'),
+                'description' => 'bail|required',
+            ];
+        } else {
+            $rules = [
+                'name' => 'bail|required|alpha|min:2|unique:cars',
+                'founded' => 'bail|required|numeric|min:1500|max:' . date('Y'),
+                'description' => 'bail|required',
+            ];
+        }
+        return $rules;
     }
 }

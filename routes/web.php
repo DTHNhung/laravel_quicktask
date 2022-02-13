@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CarsController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,4 +14,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::resource('/cars', CarsController::class);
+Route::redirect('/', '/en/cars');
+
+Route::group(['prefix' => '{language}',], function () {
+    Route::resource('/cars', CarsController::class);
+});
