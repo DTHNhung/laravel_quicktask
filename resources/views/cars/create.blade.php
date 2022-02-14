@@ -10,7 +10,7 @@
     </div>
 
     <div class="flex justify-center pt-10">
-        <form action="{{ route('cars.store', app()->getLocale()) }}" method="POST">
+        <form action="{{ route('cars.store') }}" method="POST">
             @csrf
             <div class="block">
 

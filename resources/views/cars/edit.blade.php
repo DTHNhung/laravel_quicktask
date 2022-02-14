@@ -9,12 +9,7 @@
     </div>
 
     <div class="flex justify-center pt-10">
-        <form 
-            action="{{ route('cars.update', [
-                'language' => app()->getLocale(),
-                'car' => $car->id,
-                ]) }}" 
-            method="POST">
+        <form action="{{ route('cars.update', ['car' => $car->id,]) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="block">

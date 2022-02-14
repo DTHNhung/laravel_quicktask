@@ -6,13 +6,13 @@
         @if ($message = Session::get('message'))
             <div 
                 class="bg-gradient-to-r from-gray-300 to-gray-200 p-5 text-500">
-                {{ trans('message.' . $message) }}
+                {{ $message }}
             </div>
         @endif
 
         <div class="pt-10">
             <a 
-                href="{{ route('cars.create', app()->getLocale()) }}"
+                href="{{ route('cars.create') }}"
                 class="border-b-2 pb-2 border-dotted italic text-gray-500">
                 {{ trans('titles.Add a new car') }} &rarr;
             </a>
@@ -24,11 +24,11 @@
                     <div class="float-right">
                         <a
                             class="border-b-2 pb-2 border-dotted italic text-green-500"
-                            href="{{ route('cars.edit', ['car' => $car->id, app()->getLocale(),] ) }}">
+                            href="{{ route('cars.edit', ['car' => $car->id,] ) }}">
                             {{ trans('titles.Edit') }} &rarr;
                         </a>
                         <form 
-                            action="{{ route('cars.destroy', ['car' => $car->id, app()->getLocale(),] ) }}"
+                            action="{{ route('cars.destroy', ['car' => $car->id,] ) }}"
                             class="pt-3"
                             method="POST"
                             enctype="multipart/form-data">
@@ -47,10 +47,7 @@
                     </span>
 
                     <h2 class="text-gray-700 text-4xl hover:text-gray-500">
-                        <a href="{{ route('cars.show', [
-                                'car' => $car->id,
-                                'language' => app()->getLocale(),
-                            ] ) }}">
+                        <a href="{{ route('cars.show', ['car' => $car->id,] ) }}">
                             {{ $car->name }}
                         </a>
                     </h2>
