@@ -48,7 +48,7 @@ class CarsController extends Controller
         ]);
 
         return redirect()
-            ->route('cars.index')
+            ->route('cars.index', app()->getLocale())
             ->with('message', 'Create success data of car!');
     }
 
@@ -58,13 +58,12 @@ class CarsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($lang, $id)
     {
         $car = Car::find($id);
-
         if (empty($car)) {
             return redirect()
-                ->route('cars.index')
+                ->route('cars.index', app()->getLocale())
                 ->with('message', 'No matching result found!');
         }
 
@@ -79,9 +78,19 @@ class CarsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($lang, $id)
     {
-        return view('cars.edit');
+        $car = Car::find($id);
+
+        if (empty($car)) {
+            return redirect()
+                ->route('cars.index', app()->getLocale())
+                ->with('message', 'No matching result found!');
+        }
+        
+        return view('cars.edit', [
+            'car' => $car,
+        ]);
     }
 
     /**
@@ -91,9 +100,18 @@ class CarsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateRequest $request, $lang, $id)
     {
-        return redirect()->route('cars.index');
+        $car = Car::where('id', $id)
+            ->update([
+            'name' => $request->input('name'),
+            'founded' => $request->input('founded'),
+            'description' => $request->input('description'),
+        ]);
+
+        return redirect()
+            ->route('cars.index', app()->getLocale())
+            ->with('message', 'Update success data of car!');
     }
 
     /**
@@ -102,20 +120,20 @@ class CarsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($lang, $id)
     {
         $car = Car::find($id);
 
         if (empty($car)) {
             return redirect()
-                ->route('cars.index')
+                ->route('cars.index', app()->getLocale())
                 ->with('message', 'No matching result found!');
         }
 
         $car->delete();
 
         return redirect()
-            ->route('cars.index')
+            ->route('cars.index', app()->getLocale())
             ->with('message', 'Delete success data of car!');
     }
 }

@@ -1,17 +1,22 @@
 @extends('layouts.app')
 @section('content')
-
     <div class="m-auto w-4/8 py-24">
         <div class="text-center">
             <h1 class="text-5xl uppercase bold">
-                {{ trans('titles.Create car') }}
+                {{ trans('titles.Update car') }}
             </h1>
         </div>
     </div>
 
     <div class="flex justify-center pt-10">
-        <form action="{{ route('cars.store', app()->getLocale()) }}" method="POST">
+        <form 
+            action="{{ route('cars.update', [
+                'language' => app()->getLocale(),
+                'car' => $car->id,
+                ]) }}" 
+            method="POST">
             @csrf
+            @method('PUT')
             <div class="block">
 
                 @error('name')
@@ -21,8 +26,7 @@
                     type="text"
                     class="block shadow-5xl mb-10 p-2 w-80 italic @error('name') is-invalid @enderror"
                     name="name"
-                    value="{{ old('name') }}"
-                    placeholder="{{ trans('titles.Brand name') }}...">
+                    value="{{ $car->name }}">
 
                 @error('founded')
                     <div class="text-red-500">{{ __($message, ['name' => trans('titles.founded'),]) }}</div>
@@ -31,8 +35,7 @@
                     type="text"
                     class="block shadow-5xl mb-10 p-2 w-80 italic @error('founded') is-invalid @enderror"
                     name="founded"
-                    value="{{ old('founded') }}"
-                    placeholder="{{ trans('titles.Founded') }}...">
+                    value="{{ $car->founded}}">
 
                 @error('description')
                     <div class="text-red-500">{{ __($message, ['name' => trans('titles.description'),]) }}</div>
@@ -41,10 +44,10 @@
                     type="text"
                     class="block shadow-5xl mb-10 p-2 w-80 italic @error('description') is-invalid @enderror"
                     name="description"
-                    value="{{ old('description') }}"
-                    placeholder="{{ trans('titles.Description') }}...">
+                    value="{{ $car->description }}">
+
                 <button type="submit" class="bg-green-500 block shadow-5xl mb-10 p-2 w-80 uppercase font-bold">
-                    {{ trans('titles.Submit') }}
+                    {{ trans('titles.Update') }}
                 </button>
             </div>
         </form>

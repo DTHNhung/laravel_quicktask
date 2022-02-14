@@ -13,9 +13,15 @@ class CarModel extends Model
 
     protected $primaryKey = 'id';
 
-    //a car model belongs to a car
+    //a model belongs to a car
     public function car()
     {
         return $this->belongsTo(Car::class);
+    }
+
+    // a model has many engines
+    public function engines()
+    {
+        return $this->hasMany(Engine::class);
     }
 }
