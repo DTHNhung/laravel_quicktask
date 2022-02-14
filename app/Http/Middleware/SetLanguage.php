@@ -18,8 +18,8 @@ class SetLanguage
      */
     public function handle(Request $request, Closure $next)
     {
-        if (array_key_exists($request->language, config('languages'))) {
-            App::setLocale($request->language);
+        if (array_key_exists(Session()->get('locale'), config('languages'))) {
+            App::setLocale(Session()->get('locale'));
         }
         else {
             App::setLocale(config('app.fallback_locale'));

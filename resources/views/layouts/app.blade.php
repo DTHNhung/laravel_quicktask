@@ -19,7 +19,7 @@
     <header class="bg-white shadow-md p-2">
         <nav class="m-auto w-4/5 flex flex-wrap items-center">
             <div class="flex-1 py-1">
-                <a href="{{ route('cars.index', app()->getLocale()) }}">
+                <a href="{{ route('cars.index') }}">
                     <h2 class=" text-blue-500 text-4xl font-bold">
                         <i class="fa-solid fa-car-crash"></i>
                         CAR
@@ -38,19 +38,11 @@
                     @foreach (config('languages') as $key => $lang)
                         @if ($key != App::getLocale())
                             <li>
-                                @if (substr_count(Route::current()->uri(), '{car}') > 0)
-                                    <a 
-                                        href="{{ route(Route::currentRouteName(), ['language' => $key, 'car' => $car->id,]) }}"
-                                        class="cursor-pointer flex rounded-md hover:bg-gray-200 px-4 py-2">
-                                        {{ $key }}
-                                    </a>
-                                @else
-                                    <a 
-                                        href="{{ route(Route::currentRouteName(), $key) }}"
-                                        class="cursor-pointer flex rounded-md hover:bg-gray-200 px-4 py-2">
-                                        {{ $key }}
-                                    </a>
-                                @endif
+                                <a 
+                                    href="{{ route('lang.switch', ['locale' => $key]) }}"
+                                    class="cursor-pointer flex rounded-md hover:bg-gray-200 px-4 py-2">
+                                    {{ $key }}
+                                </a>
                             </li>
                         @endif
                     @endforeach

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LanguagesController;
 use App\Http\Controllers\CarsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
@@ -14,8 +15,8 @@ use Illuminate\Support\Facades\App;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::redirect('/', '/en/cars');
+Route::get('/lang/{locale}', [LanguagesController::class, 'switchLang'])->name('lang.switch');
 
-Route::group(['prefix' => '{language}',], function () {
-    Route::resource('/cars', CarsController::class);
-});
+Route::redirect('/', '/cars');
+
+Route::resource('/cars', CarsController::class);
